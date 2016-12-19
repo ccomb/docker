@@ -12,13 +12,13 @@ export PGHOST PGPORT PGUSER PGPASSWORD
 case "$1" in
 	--)
 		shift
-		exec openerp-server "$@"
+		exec /srv/odoo/odoo.py "$@"
 		;;
 	-*)
-		exec openerp-server "$@"
+		exec /srv/odoo/odoo.py "$@"
 		;;
 	*)
-		exec "$@"
+		exec /srv/odoo/odoo.py "$@"
 esac
 
 exit 1
