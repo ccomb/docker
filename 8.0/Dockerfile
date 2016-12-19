@@ -11,6 +11,8 @@ RUN set -x; \
             curl \
             node-less \
             node-clean-css \
+            python-gevent \
+            python-pip \
             python-pyinotify \
             python-renderpm \
             python-support \
@@ -19,7 +21,9 @@ RUN set -x; \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
-        && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
+        && rm -rf /var/lib/apt/lists/* wkhtmltox.deb \
+        && pip install psycogreen==1.0
+
 
 # Install Odoo
 ENV COMMIT fba04cca1e93ea42e471ca6e30735b86c81b1d4e
@@ -175,7 +179,6 @@ RUN set -x; \
             unzip \
             xz-utils \
             zlib1g-dev
-
 
 
 # Copy entrypoint script and Odoo configuration file
