@@ -26,8 +26,6 @@ RUN set -x; \
 
 
 # Install Odoo
-ENV COMMIT fba04cca1e93ea42e471ca6e30735b86c81b1d4e
-
 RUN set -x; \
         apt-get update && \
         apt-get build-dep -y python \
@@ -85,9 +83,8 @@ RUN set -x; \
             python-yaml \
             unzip \
             zlib1g-dev \
-        && pip install pip==9.0.1 setuptools==32.1.0 \
         && cd /srv && curl -o odoo.zip -SL https://github.com/anybox/odoo/archive/fba04cca1e93ea42e471ca6e30735b86c81b1d4e.zip \
-        && unzip odoo.zip && rm odoo.zip && mv odoo-${COMMIT} odoo && cd odoo \
+        && unzip odoo.zip && rm odoo.zip && mv odoo-fba04cca1e93ea42e471ca6e30735b86c81b1d4e odoo && cd odoo \
         && pip install -r requirements.txt \
         && apt-get remove -y \
             binutils \
@@ -115,67 +112,32 @@ RUN set -x; \
             libatomic1:amd64 \
             libc-dev-bin \
             libc6-dev \
-            libcilkrts5:amd64 \
-            libcloog-isl4:amd64 \
-            libcroco3:amd64 \
             libdpkg-perl \
-            libevent-2.0-5:amd64 \
-            libevent-core-2.0-5:amd64 \
             libevent-dev \
-            libevent-extra-2.0-5:amd64 \
-            libevent-openssl-2.0-5:amd64 \
-            libevent-pthreads-2.0-5:amd64 \
             libexpat1-dev \
             libffi-dev \
             libfreetype6-dev \
             libgcc-4.9-dev \
-            libgomp1:amd64 \
-            libgssrpc4:amd64 \
-            libhtml-tagset-perl \
-            libisl10:amd64 \
-            libitm1:amd64 \
             libjpeg-dev \
             libjpeg62-turbo-dev \
-            libkadm5clnt-mit9:amd64 \
-            libkadm5srv-mit9:amd64 \
-            libkdb5-7:amd64 \
             liblcms2-dev \
             libldap2-dev \
-            liblsan0:amd64 \
-            libmagic1:amd64 \
-            libmpc3:amd64 \
-            libmpfr4:amd64 \
-            libpipeline1:amd64 \
             libpq-dev \
             libpython-dev \
             libpython2.7-dev \
-            libquadmath0:amd64 \
             libsasl2-dev \
-            libsp1c2 \
             libstdc++-4.9-dev \
-            libtext-format-perl \
-            libtimedate-perl \
-            libtsan0:amd64 \
-            libubsan0:amd64 \
-            libunistring0:amd64 \
-            liburi-perl \
             libxml2-dev \
             libxslt1-dev \
             libyaml-dev \
             linux-libc-dev \
-            lsb-release \
             make \
             man-db \
             patch \
-            perl \
-            perl-modules \
             po-debconf \
             python-all \
             python-dev \
-            python-pip \
             python2.7-dev \
-            sgml-data \
-            sp \
             unzip \
             xz-utils \
             zlib1g-dev
@@ -190,7 +152,7 @@ RUN adduser --system --quiet odoo \
 # Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN mkdir -p /mnt/extra-addons /var/lib/odoo \
         && chown -R odoo: /var/lib/odoo /mnt/extra-addons
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+VOLUME ["/var/lib/odoo"]
 
 # Expose Odoo services
 EXPOSE 8069 8071
