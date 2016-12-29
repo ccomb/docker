@@ -25,7 +25,7 @@ RUN set -x; \
         && pip install psycogreen==1.0
 
 
-# Install Odoo
+# Install Odoo (pepp-8 branch)
 RUN set -x; \
         apt-get update && \
         apt-get build-dep -y python \
@@ -145,9 +145,9 @@ RUN set -x; \
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
-COPY ./odoo.conf /etc/odoo/
+COPY ./odoo.conf /var/lib/odoo/
 RUN adduser --system --quiet odoo \
-    && chown odoo: /etc/odoo/odoo.conf
+    && chown odoo: /var/lib/odoo/odoo.conf
 
 # Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN mkdir -p /mnt/extra-addons /var/lib/odoo \
@@ -158,7 +158,7 @@ VOLUME ["/var/lib/odoo"]
 EXPOSE 8069 8071
 
 # Set the default config file
-ENV OPENERP_SERVER /etc/odoo/odoo.conf
+ENV OPENERP_SERVER /var/lib/odoo/odoo.conf
 
 # Set default user when running the container
 USER odoo
